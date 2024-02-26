@@ -1,0 +1,8 @@
+#config/services_test.yaml
+imports:
+    - { resource: services.yaml }
+
+services:
+    # we must make this service public to be able to mock it in unit test
+    App\Service\Exchange\CurrencyExchangeInterface:
+        public: true

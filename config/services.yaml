@@ -4,6 +4,33 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    app.csv_configuration:
+        # see properties in Entity\UserOperation
+        headers: 'date,uid,clientType,opType,amount,currency'
+        delimiter:  ','
+        decimal_delimiter: '.' # like, 150.00
+        # column title to seek for precision of amout
+        decimal_column: 'amount'
+    app.fee_rules:
+        # {%}, All deposits are charged 0.03% of deposit amount.
+        deposit: 0.03
+        # {%}, Private Clients Commission fee - 0.3% from withdrawn amount.
+        withdraw_private: 0.3
+        # {EUR},  1000.00 EUR for a week (from Monday to Sunday) is free of charge
+        withdraw_private_limit: 1000
+        # {days}, Only for the first 3 withdraw operations per a week
+        withdrawals_per_week: 3
+        # {%}, Business Clients Commission fee - 0.5% from withdrawn amount.
+        withdraw_business: 0.5
+        withdraw_currency: 'EUR'
+    app.exchange:
+        # https://apilayer.com/marketplace/exchangerates_data-api#documentation-tab
+        api_base_URL: 'https://api.apilayer.com/exchangerates_data/latest'
+        # apikey: stored in .env as LAYER_API_KEY
+        apikey: '%env(LAYER_API_KEY)%'
+        # supported currencies
+        currencies: 'EUR,USD,JPY'
+        main_currency: 'EUR'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +49,4 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
