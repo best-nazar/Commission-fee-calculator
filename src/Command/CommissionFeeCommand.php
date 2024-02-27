@@ -17,9 +17,7 @@ class CommissionFeeCommand extends Command
 {   
     public const CSV_FILE = 'csv_file';
 
-    public function __construct(
-        private FeeProcessor $service,
-    )
+    public function __construct(private FeeProcessor $service)
     {
         parent::__construct();
     }

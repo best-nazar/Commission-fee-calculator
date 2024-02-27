@@ -30,16 +30,25 @@ class FeeProcessor
         private CurrencyExchangeInterface $currencyExchange,
     ){}
 
+    /**
+     * Set Data source for the Dataloader.
+     */
     public function setSource(string $sourcePath)
     {
         $this->dataLoader->setSourcePath($sourcePath);
     }
 
+    /**
+     * Set/Change Calculation strategy on the runtime.
+     */
     public function setCalculationStrategy(CalculationStrategyInterface $strategy) 
     {
         $this->calculationStrategy = $strategy;
     }  
 
+    /**
+     * Process the calculation of the few over the data source.
+     */
     public function calculateFee(): array
     {
         $result = [];
@@ -53,6 +62,9 @@ class FeeProcessor
         return $result;
     }
 
+    /**
+     * Process payment operation based on its type.
+     */
     public function processPayment(UserOperation $item): string
     {
         switch ($item->getOpType()) {
@@ -74,12 +86,12 @@ class FeeProcessor
                 break;
 
             default:
-                throw new \InvalidArgumentException("Invalid operation type " + $item->getOpType() ."");
+                throw new \InvalidArgumentException(
+                    "Invalid operation type " + $item->getOpType() ." for UID:" . $item->getUid()
+                );
         }
 
         // Perform the calculation using the selected strategy
-        $calculatedAmount = $this->calculationStrategy->calculateFee($item, $this->feeRules);
-
-        return $calculatedAmount;
+        return $this->calculationStrategy->calculateFee($item, $this->feeRules);
     }
 }

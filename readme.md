@@ -1,11 +1,13 @@
-# Symfony CLI apprication
+# Symfony CLI application
 ## Commission fee calculation
 
-### Run the calculation:
-1. CD to project dir
-2. run the console command:
+### Instalation
+1. Clone the Repository
+2. Create .env file
+3. Add to .env LAYER_API_KEY='' for https://api.apilayer.com/exchangerates_data/latest API Calls
+4. Install dependencies. Run command:
 ```
- php bin/console app:calculate tests/input.csv
+composer install
 ```
 
 ### Testing
@@ -14,9 +16,16 @@
 php bin/phpunit tests
 ```
 
+### Run the calculation:
+1. CD to project dir
+2. run the console command:
+```
+ php bin/console app:calculate tests/input.csv
+```
+
 ### APP configuration
 ```
-services.yaml
+config/services.yaml
 ```
 
 ### Task Description
@@ -42,3 +51,6 @@ Commission fee - `0.5%` from withdrawn amount.
 
 #### Input
 See tests/input.csv for data input example.
+
+#### Output
+Printed to console.
